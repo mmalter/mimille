@@ -1,44 +1,9 @@
 import libtorrent
-import configobj
-import validate
+from .configuration import configuration
 import os
 import glob
 import socket
 import time
-
-#Use asyncio to communicate
-
-def get_filename(appname):
-    """Return the configuration file path."""
-    if os.name == 'posix':
-        if os.path.isfile(os.environ["HOME"]+'/.'+appname):
-            return os.environ["HOME"]+'/.'+appname
-        elif os.path.isfile('/etc/'+appname):
-            return '/etc/'+appname
-        else:
-            raise FileNotFoundError('No configuration file found.')
-    elif os.name == 'mac':
-        return ("%s/Library/Application Support/%s" % (os.environ["HOME"], appname))
-    elif os.name == 'nt':
-        return ("%s\Application Data\%s" % (os.environ["HOMEPATH"], appname))
-    else:
-        raise UnsupportedOSError(os.name)
-
-def get_configuration(configuration_filename):
-    _configspec = """
-    port = integer()
-    torrent_directory = string()
-    download_directory = string()
-    complete_directory = string()
-    session_directory = string()
-    temporary_directory = string()
-    socket_directory = string()
-    upload_download_ratio = int()"""
-    configuration = configobj.ConfigObj(configuration_filename,
-                                        configspec=_configspec.split('\n'))
-    validator = validate.Validator()
-    configuration.validate(validator, copy=True)
-    return configuration.dict()
 
 def get_session(configuration):
     session = libtorrent.session()
@@ -68,7 +33,7 @@ def initialize_torrents(configuration,session):
                                      storage_mode='storage_mode_allocate')
 
 def event_loop(configuration):
-    socket_path = os.path.normpath(configuration.['socket_directory'] '.socket'):
+    socket_path = os.path.normpath(configuration.['socket_directory'] 'mtorrent.socket'):
     if os.path.exists( socket_path ):
           os.remove( socket_path )
     server = socket.socket( socket.AF_UNIX, socket.SOCK_STREAM )
@@ -83,8 +48,6 @@ def event_loop(configuration):
             else:
                 print data
                 break
-
-
 
 if __name__ == "__main__":
     configuration = get_configuration(get_configuration_filename('mtorrent'))
