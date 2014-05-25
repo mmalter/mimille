@@ -33,7 +33,7 @@ def initialize_torrents(configuration,session):
                                      storage_mode='storage_mode_allocate')
 
 def event_loop(configuration):
-    socket_path = os.path.normpath(configuration.['socket_directory'] 'mtorrent.socket'):
+    socket_path = os.path.normpath(configuration.['socket_directory'] 'mimille.socket'):
     if os.path.exists( socket_path ):
           os.remove( socket_path )
     server = socket.socket( socket.AF_UNIX, socket.SOCK_STREAM )
@@ -50,7 +50,7 @@ def event_loop(configuration):
                 break
 
 if __name__ == "__main__":
-    configuration = get_configuration(get_configuration_filename('mtorrent'))
+    configuration = get_configuration(get_configuration_filename('mimille'))
     session = get_session(configuration)
     torrents = initialize_torrents(configuration,session)
     event_loop(configuration)

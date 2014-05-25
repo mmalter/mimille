@@ -39,5 +39,5 @@ def get_configuration(configuration_filename):
     configuration.validate(validator, copy=True)
     return configuration.dict()
 
-configuration = get_configuration(get_configuration_filename('mtorrent'))
+configuration = get_configuration(get_configuration_filename('mimille'))
 
