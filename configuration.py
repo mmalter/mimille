@@ -12,9 +12,14 @@ def get_filename(appname):
         else:
             raise FileNotFoundError('No configuration file found.')
     elif os.name == 'mac':
-        return ("%s/Library/Application Support/%s" % (os.environ["HOME"], appname))
+        if os.path.isfile("%s/Library/Application Support/%s" % (os.environ["HOME"], appname):
+            return ("%s/Library/Application Support/%s" % (os.environ["HOME"], appname))
+        elif os.path.isfile('/etc/'+appname):
+            return '/etc/'+appname
+        else:
+            raise FileNotFoundError('No configuration file found.')
     elif os.name == 'nt':
-        return ("%s\Application Data\%s" % (os.environ["HOMEPATH"], appname))
+        return ("%s\%s" % (os.environ["APPDATA"], appname))
     else:
         raise UnsupportedOSError(os.name)
 
