@@ -53,23 +53,33 @@ def initialize_torrents(configuration,session):
             logger.info('Adding %s to the session', torrent_path)
             yield session.add_torrent(info, configuration['download_directory'],
                                      storage_mode='storage_mode_allocate')
+    logger.info('Torrents initialized.')
 
 def event_loop(configuration):
+    logger.info('Spawning event loop.')
     socket_path = os.path.normpath(configuration.['socket_directory'] 'mimille.socket'):
     if os.path.exists( socket_path ):
           os.remove( socket_path )
     server = socket.socket( socket.AF_UNIX, socket.SOCK_STREAM )
     server.bind(socket_path)
     server.listen(5)
-    while True:
+    exit_sentinel = False
+    while True: 
         connection, address = server.accept()
-        while True: 
+        while True
             data = connection.recv( 512 )
-            if not data:
+            if not data or data == 'close':
                 break
             else:
-                print data
-                break
+                if data == 'quit':
+                    exit_sentinel = True
+                else:
+                    connection.send('Unrecognized command: ' data)
+        connection.close()
+        if exit_sentinel == True:
+            break
+    server.close()
+    logger.info('Quitting event_loop')
 
 if __name__ == "__main__":
     configuration = get_configuration(get_configuration_filename('mimille'))
