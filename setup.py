@@ -12,11 +12,12 @@ def get_configuration_path(appname):
     else:
         raise UnsupportedOSError(os.name)
 
-setup(name='mtorrent',
-	version='0.1',
+setup(name='mimille',
+    version='0.1',
     description='A bittorrent client following a client/server architecture',
     author='Michaël Malter',
     author_email='dev@michaelmalter.fr',
-    url='https://github.com/mmalter/mtorrent', 
-    data_files=[(get_configuration_path('mtorrent'),['mtorrent'])]
+    url='https://github.com/mmalter/mimille', 
+    packages = ['mimille'],
+    data_files=[(get_configuration_path('mimille'),['mimille'])]
 	)
