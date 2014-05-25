@@ -31,7 +31,7 @@ def get_configuration(configuration_filename):
     complete_directory = string()
     session_directory = string()
     temporary_directory = string()
-    socket_directory = string()
+    logging_directory = string()
     upload_download_ratio = int()"""
     configuration = configobj.ConfigObj(configuration_filename,
                                         configspec=_configspec.split('\n'))
