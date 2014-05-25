@@ -55,6 +55,27 @@ def initialize_torrents(configuration,session):
                                      storage_mode='storage_mode_allocate')
     logger.info('Torrents initialized.')
 
+
+def progress(session):
+    state = session.state()
+    return state.progress
+
+def download_rate(session):
+    state = session.state()
+    return state.download_rate
+
+def upload_rate(session):
+    state = session.state()
+    return state.upload_rate
+
+def num_peers(session):
+    state = session.state()
+    return state.num_peers
+
+
+commands = {'progress': progress}
+
+
 def event_loop(configuration):
     logger.info('Spawning event loop.')
     socket_path = os.path.normpath(configuration.['socket_directory'] 'mimille.socket'):
@@ -71,8 +92,11 @@ def event_loop(configuration):
             if not data or data == 'close':
                 break
             else:
+                logger.info('Received command: %s', data)
                 if data == 'quit':
                     exit_sentinel = True
+                elif data in commands:
+                    connection.send(commands[data])
                 else:
                     connection.send('Unrecognized command: ' data)
         connection.close()
