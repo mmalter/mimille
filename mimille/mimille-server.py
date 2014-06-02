@@ -55,26 +55,18 @@ def initialize_torrents(configuration,session):
                                      storage_mode='storage_mode_allocate')
     logger.info('Torrents initialized.')
 
+def generate_get_state_function(state_option):
+    class get_state(object):
+        def __init__(self)
+            self.__name__ = state_option
+        def __call__(self, session)
+            state = session.state()
+            return getattr(state, state_option)
+    return get_state(state_option)
 
-def progress(session):
-    state = session.state()
-    return state.progress
-
-def download_rate(session):
-    state = session.state()
-    return state.download_rate
-
-def upload_rate(session):
-    state = session.state()
-    return state.upload_rate
-
-def num_peers(session):
-    state = session.state()
-    return state.num_peers
-
-
-commands = {'progress': progress}
-
+state_options = ['progress', 'download_rate', 'upload_rate', 'num_peers']
+commands = {state_option: generate_get_state_function(state_option) 
+ for state_option in state_options}
 
 def event_loop(configuration):
     logger.info('Spawning event loop.')
