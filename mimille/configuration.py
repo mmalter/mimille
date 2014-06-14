@@ -2,7 +2,7 @@ import configobj
 import validate
 import os
 
-def get_filename(appname):
+def get_configuration_filename(appname):
     """Return the configuration file path."""
     if os.name == 'posix':
         if os.path.isfile(os.environ["HOME"]+'/.'+appname):
@@ -12,7 +12,7 @@ def get_filename(appname):
         else:
             raise FileNotFoundError('No configuration file found.')
     elif os.name == 'mac':
-        if os.path.isfile("%s/Library/Application Support/%s" % (os.environ["HOME"], appname):
+        if os.path.isfile("%s/Library/Application Support/%s" % (os.environ["HOME"], appname)):
             return ("%s/Library/Application Support/%s" % (os.environ["HOME"], appname))
         elif os.path.isfile('/etc/'+appname):
             return '/etc/'+appname
@@ -32,6 +32,7 @@ def get_configuration(configuration_filename):
     session_directory = string()
     temporary_directory = string()
     logging_directory = string()
+    socket_directory = string()
     upload_download_ratio = int()"""
     configuration = configobj.ConfigObj(configuration_filename,
                                         configspec=_configspec.split('\n'))
