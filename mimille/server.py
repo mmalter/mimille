@@ -57,7 +57,7 @@ def initialize_torrents(configuration,session):
 
 def generate_get_state_function(state_option):
     class get_state(object):
-        def __init__(self):
+        def __init__(self,state_option):
             self.__name__ = state_option
         def __call__(self, session):
             state = session.state()
