@@ -1,6 +1,7 @@
 import configobj
 import validate
 import os
+import re
 
 def get_configuration_filename(appname):
     """Return the configuration file path."""
@@ -38,7 +39,12 @@ def get_configuration(configuration_filename):
                                         configspec=_configspec.split('\n'))
     validator = validate.Validator()
     configuration.validate(validator, copy=True)
-    return configuration.dict()
+    configuration = configuration.dict()
+    directory_regex = re.compile('directory')
+    directories = [key_ if re.search(directory_regex, key_) for key_ in configuration.keys()]
+    for directory in directories:
+        configuration[directory] = os.path.normpath(os.path.expanduser(configuration[directory]))
+    return configuration
 
 configuration = get_configuration(get_configuration_filename('mimille'))
 

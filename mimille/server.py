@@ -9,7 +9,7 @@ import time
 def get_logger(configuration):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
-    file_handler = logging.FileHandler(os.path.normpath(configuration['logging_directory'])+'mimille.log')
+    file_handler = logging.FileHandler(configuration['logging_directory']+'/mimille.log')
     file_handler.setLevel(logging.DEBUG)
     frmt = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -28,8 +28,8 @@ def get_session(configuration):
 
 def save_session(session,configuration):
     logger.info('Saving session.')
-    filepath = os.path.normpath(configuration['temporary_directory'])+'session'
-    _filepath = os.path.normpath(configuration['session_directory'])+'session'
+    filepath = configuration['temporary_directory']+'/session'
+    _filepath = configuration['session_directory']+'/session'
     with open(filepath, "wb") as _file:
         _file.write(libtorrent.bencode(session.save_state()))
     shutil.move(filepath,_filepath)
@@ -37,7 +37,7 @@ def save_session(session,configuration):
 
 def load_session(configuration, session):
     logger.info('Loading session.')
-    filepath = os.path.normpath(configuration['session_directory'])+'session'
+    filepath = configuration['session_directory']+'/session'
     with open(filepath, "rb") as _file:
         session_state = libtorrent.bdecode(_file.read())
     session.load_state(session_state)
@@ -46,7 +46,7 @@ def load_session(configuration, session):
 def initialize_torrents(configuration,session):
     logger.info('Initializing torrents.')
     for torrent_path in glob.glob(
-        os.path.normpath(configuration['torrent_directory'])+'*.torrent'):
+        configuration['torrent_directory']+'/*.torrent'):
         torrent = libtorrent.bdecode(open(torrent_path, 'rb').read())
         info = libtorrent.torrent_info(torrent)
         if info.info_hash() not in session.get_torrent_list():
@@ -70,7 +70,7 @@ commands = {state_option: generate_get_state_function(state_option)
 
 def event_loop(configuration):
     logger.info('Spawning event loop.')
-    socket_path = os.path.normpath(configuration['socket_directory']+'mimille.socket')
+    socket_path = configuration['socket_directory']+'/mimille.socket'
     if os.path.exists( socket_path ):
           os.remove( socket_path )
     server = socket.socket( socket.AF_UNIX, socket.SOCK_STREAM )

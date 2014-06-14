@@ -18,7 +18,7 @@ import os
 from mimille import version
 
 def connect_to_socket():
-	socket_path = os.path.normpath(configuration['General']['socket_directory']+'/mimille.socket')
+	socket_path = configuration['General']['socket_directory']+'/mimille.socket'
 	client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 	client.connect(socket_path)
 	return client
