@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 from setuptools import setup
-from mimille import version
 import os
+
+with open('mimille/version.py') as f: exec(f.read())
 
 def get_configuration_path(appname):
     """Return the configuration file path."""
@@ -14,15 +15,15 @@ def get_configuration_path(appname):
         raise UnsupportedOSError(os.name)
 
 setup(name='mimille',
-    version=version.version,
+    version=version,
     description='A bittorrent client following a client/server architecture',
     author='Michaël Malter',
     author_email='dev@michaelmalter.fr',
     url='https://github.com/mmalter/mimille', 
     packages = ['mimille'],
     data_files=[
-        (get_configuration_path('mimille'),['mimille']),
-        ('/usr/local/bin',['mimille/server.py']),
+        (get_configuration_path('mimille'),['config/mimille']),
+        ('/usr/local/bin',['mimille/mimille_server.py']),
         ('/etc/systemd/system',['os_specific/mimille.service'])]
 	)
 
