@@ -24,7 +24,20 @@ setup(name='mimille',
     data_files=[
         (get_configuration_path('mimille'),['config/mimille']),
         ('/usr/local/bin',['mimille/mimille_server.py']),
-        ('/etc/systemd/system',['os_specific/mimille.service'])]
+        ('/etc/systemd/system',['os_specific/mimille.service'])],
+    classifiers = [
+        'Development Status :: 3 - Beta',
+        'Environment :: Console',
+        'Environment :: No Input/Output (Daemon)',
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: System Administrators',
+        'License :: OSI Approved :: GNU Affero General Public License v3',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Programming Language :: Python :: 3',
+        'Topic :: Communications :: File Sharing',
+    ]
 	)
 
 with open('/etc/systemd/system/mimille.service'):
