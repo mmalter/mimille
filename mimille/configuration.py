@@ -27,15 +27,16 @@ def get_configuration_filename(appname):
 
 def get_configuration(configuration_filename):
     _configspec = """
-    syslog_facility = int()
-    port = integer()
+    syslog_facility = integer()
+    min_port = integer()
+    max_port = integer()
     torrent_directory = string()
     download_directory = string()
     complete_directory = string()
     session_directory = string()
     temporary_directory = string()
     socket_directory = string()
-    upload_download_ratio = int()"""
+    upload_download_ratio = integer()"""
     configuration = configobj.ConfigObj(configuration_filename,
                                         configspec=_configspec.split('\n'))
     validator = validate.Validator()
@@ -46,8 +47,6 @@ def get_configuration(configuration_filename):
     for directory in directories:
         configuration[directory] = os.path.normpath(os.path.expanduser(configuration[directory]))
         misc_func.makedir_if_absent(configuration[directory])
-    #validate seems to mess up the type here. Dirty line
-    configuration['syslog_facility'] = int(configuration['syslog_facility'])
     return configuration
 
 configuration = get_configuration(get_configuration_filename('mimille'))

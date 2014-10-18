@@ -24,7 +24,7 @@ logger = get_logger(configuration)
 def get_session(configuration):
     logger.info('Creating session.')
     session = libtorrent.session()
-    session.listen_on(configuration['port'])
+    session.listen_on(configuration['min_port'],configuration['max_port'])
     logger.info('Session created')
     return session
 

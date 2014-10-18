@@ -1,5 +1,6 @@
 syslog_facility = 19
-port=27017
+min_port=27017
+max_port=27020
 torrent_directory = ~/mimille/torrent
 download_directory = ~/mimille/download
 complete_directory = ~/mimille/complete
