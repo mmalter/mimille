@@ -5,5 +5,4 @@ complete_directory = ~/mimille/complete
 session_directory = ~/mimille/session
 temporary_directory = ~/mimille/temporary
 upload_download_ratio = 1.5
-logging_directory=/var/log/
 socket_directory=/run/

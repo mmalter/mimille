@@ -1,2 +1,2 @@
 from .configuration import configuration
-from . import client, server, version
+from . import mimille_client, mimille_server, version

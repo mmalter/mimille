@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import logging
+from logging.handlers import SysLogHandler
 import libtorrent
-from .configuration import configuration
+from mimille.configuration import configuration
 import os
 import glob
 import socket
@@ -10,7 +11,7 @@ import time
 def get_logger(configuration):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
-    file_handler = logging.FileHandler(configuration['logging_directory']+'/mimille.log')
+    file_handler = SysLogHandler(address='/dev/log')
     file_handler.setLevel(logging.DEBUG)
     frmt = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -99,7 +100,6 @@ def event_loop(configuration):
     logger.info('Quitting event_loop')
 
 def main():
-    configuration = get_configuration(get_configuration_filename('mimille'))
     session = get_session(configuration)
     torrents = initialize_torrents(configuration,session)
     event_loop(configuration)
