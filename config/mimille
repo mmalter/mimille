@@ -1,3 +1,4 @@
+syslog_facility = 19
 port=27017
 torrent_directory = ~/mimille/torrent
 download_directory = ~/mimille/download

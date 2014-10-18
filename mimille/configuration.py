@@ -27,6 +27,7 @@ def get_configuration_filename(appname):
 
 def get_configuration(configuration_filename):
     _configspec = """
+    syslog_facility = int()
     port = integer()
     torrent_directory = string()
     download_directory = string()
@@ -45,6 +46,8 @@ def get_configuration(configuration_filename):
     for directory in directories:
         configuration[directory] = os.path.normpath(os.path.expanduser(configuration[directory]))
         misc_func.makedir_if_absent(configuration[directory])
+    #validate seems to mess up the type here. Dirty line
+    configuration['syslog_facility'] = int(configuration['syslog_facility'])
     return configuration
 
 configuration = get_configuration(get_configuration_filename('mimille'))

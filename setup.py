@@ -8,7 +8,7 @@ with open('mimille/version.py') as f: exec(f.read())
 def get_configuration_path(appname):
     """Return the configuration file path."""
     if os.name == 'posix' or os.name == 'mac':
-        return '/etc/'+appname
+        return '/etc/'
     elif os.name == 'nt':
         return ("%s\%s" % (os.environ["APPDATA"], appname))
     else:

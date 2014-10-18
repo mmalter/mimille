@@ -11,7 +11,7 @@ import time
 def get_logger(configuration):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
-    file_handler = SysLogHandler(address='/dev/log')
+    file_handler = SysLogHandler(address='/dev/log',facility=configuration['syslog_facility'])
     file_handler.setLevel(logging.DEBUG)
     frmt = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
